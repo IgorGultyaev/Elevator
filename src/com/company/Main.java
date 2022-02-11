@@ -32,13 +32,28 @@ public class Main {
                 System.out.println("Слишком высокое значение, номер этажа не долшен быть больше: " + highLeve);
             } catch (NumberFormatException R) {
                 System.out.println("Доспускается вводить только цифровые значения в диапазоне от: " + lowLevel + " до: " + highLeve);
+            } catch (IllegalStateException R) {
+                System.out.println("Лифт сломался нажмите: 0 ");
             }
-
         }
-        System.out.println(queue);
-        //TODO Упорядочить очередь и
-        // доделать расчёт задания со *
-        // возможно стоит поменять класс очереди
-        // на друго в которую автоматически упорядочиваются значеия
+        queue.poll();
+        int waitDoorsInSeconds = 10;
+        int waitMoveInSeconds = 5;
+        int totalSeconds = 0;
+        int previousFloor = queue.peek();
+        int currentFloor = queue.peek();
+        System.out.println("Последовательность движения лифта");
+        do {
+            previousFloor = queue.peek();
+            queue.poll();
+            if (!queue.isEmpty()) {
+                currentFloor = queue.peek();
+                System.out.println("Этаж :" + previousFloor + " Следующий этаж: " + currentFloor);
+            } else System.out.println("Этаж :" + previousFloor);
+
+            totalSeconds += Math.abs(currentFloor - previousFloor) * waitMoveInSeconds;
+            totalSeconds += waitDoorsInSeconds;
+        } while (!queue.isEmpty());
+        System.out.println("Время затраченное лифтом на маршрут =: " + totalSeconds + " с.");
     }
 }
