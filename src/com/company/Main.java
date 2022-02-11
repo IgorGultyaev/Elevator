@@ -21,6 +21,7 @@ public class Main {
         Queue <Integer> queue = new PriorityQueue<>();
         Scanner scanner = new Scanner(System.in);
         while (!(choice == 0)) {
+            System.out.println("Введите этаж с 1 по 25 и нажмите Enter, что бы завершить введите 0");
             String choiceFloor = scanner.nextLine();
             try {
                 choice = Integer.parseInt(choiceFloor);
@@ -40,10 +41,10 @@ public class Main {
         int waitDoorsInSeconds = 10;
         int waitMoveInSeconds = 5;
         int totalSeconds = 0;
-        int previousFloor = queue.peek();
-        int currentFloor = queue.peek();
+        int previousFloor = 0;
+        int currentFloor = 0;
         System.out.println("Последовательность движения лифта");
-        do {
+        while (!queue.isEmpty()) {
             previousFloor = queue.peek();
             queue.poll();
             if (!queue.isEmpty()) {
@@ -53,7 +54,7 @@ public class Main {
 
             totalSeconds += Math.abs(currentFloor - previousFloor) * waitMoveInSeconds;
             totalSeconds += waitDoorsInSeconds;
-        } while (!queue.isEmpty());
+        }
         System.out.println("Время затраченное лифтом на маршрут =: " + totalSeconds + " с.");
     }
 }
