@@ -9,11 +9,17 @@ public class Main {
     final static int lowLevel = 0;
     private static final int highLeve = 25;
 
-    public static void checkFloor(int floor, int lvlLow, int lvlHi) throws FloorException {
+    public static void checkFloor(int floor, int lvlLow, int lvlHi, Queue<Integer> queue) throws FloorException {
         if (floor < lvlLow) {
             throw new FloorLowException("the floor value is too small");
         } else if (floor > lvlHi) {
             throw new FloorLowException("the floor value is too high");
+        }
+        for (Integer queueCheck : queue
+        ) {
+            if (floor == queueCheck) {
+                throw new DoubleChoiceException("the floor has already been selected");
+            }
         }
     }
 
@@ -26,7 +32,7 @@ public class Main {
             String choiceFloor = scanner.nextLine();
             try {
                 choice = Integer.parseInt(choiceFloor);
-                checkFloor(choice, lowLevel, highLeve);
+                checkFloor(choice, lowLevel, highLeve, queue);
                 queue.add(choice);
             } catch (FloorLowException FloorException) {
                 System.out.println("Слишком маленькое значение, номер этажа не долшен быть меньше: " + lowLevel);
@@ -36,6 +42,9 @@ public class Main {
                 System.out.println("Доспускается вводить только цифровые значения в диапазоне от: " + lowLevel + " до: " + highLeve);
             } catch (IllegalStateException R) {
                 System.out.println("Лифт сломался нажмите: 0 ");
+            } catch (DoubleChoiceException R) {
+                System.out.println("Номер этаже уже введен, введите этаж с 1 по 25 за исключением:");
+                System.out.println(queue);
             }
         }
         queue.poll();
