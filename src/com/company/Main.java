@@ -7,18 +7,19 @@ import java.util.Scanner;
 public class Main {
 
     final static int lowLevel = 0;
-    private static int highLeve =25;
+    private static final int highLeve = 25;
+
     public static void checkFloor(int floor, int lvlLow, int lvlHi) throws FloorException {
-        if(floor < lvlLow) {
+        if (floor < lvlLow) {
             throw new FloorLowException("the floor value is too small");
         } else if (floor > lvlHi) {
             throw new FloorLowException("the floor value is too high");
         }
     }
 
-    public static void main(String[] args) throws FloorException{
+    public static void main(String[] args) throws FloorException {
         int choice = -1;
-        Queue <Integer> queue = new PriorityQueue<>();
+        Queue<Integer> queue = new PriorityQueue<>();
         Scanner scanner = new Scanner(System.in);
         while (!(choice == 0)) {
             System.out.println("Введите этаж с 1 по 25 и нажмите Enter, что бы завершить введите 0");
